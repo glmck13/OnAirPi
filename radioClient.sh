@@ -48,7 +48,7 @@ EZINFODESC=${EZInfoDesc_SAVE:-Description}
 cat - >$EZXML <<-EOF
 <ezstream>
 	<url>$ICECASTURL</url>
-	<sourcepassword>KurtVonnegutIce9!</sourcepassword>
+	<sourcepassword></sourcepassword>
 	<format>MP3</format>
 	<filename>stdin</filename>
 	<stream_once>1</stream_once>
