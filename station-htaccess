@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "mckserver"
+AuthUserFile /var/www/html/station/.htpasswd
+Require valid-user
