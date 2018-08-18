@@ -4,7 +4,7 @@ trap : HUP INT QUIT
 
 exec >/dev/null 2>&1
 
-KeyStartCast=power KeyStopCast=mute KeyShutdown=home
+KeyStopCast=power KeyShutdown=media KeyStartCast=mute
 
 LEDGREEN=4 LEDYELLOW=2 LEDRED=3
 
@@ -48,7 +48,7 @@ EZINFODESC=${EZInfoDesc_SAVE:-Description}
 cat - >$EZXML <<-EOF
 <ezstream>
 	<url>$ICECASTURL</url>
-	<sourcepassword></sourcepassword>
+	<sourcepassword>KurtVonnegutIce9!</sourcepassword>
 	<format>MP3</format>
 	<filename>stdin</filename>
 	<stream_once>1</stream_once>
@@ -69,7 +69,7 @@ do
 
 	case ${Key#*_} in
 
-	$KeyStartCast)
+	$KeyStopCast)
 		[ "$(pgrep ezstream)" ] || continue
 		pkill ezstream; wait %1
 		gpio -g write $LEDGREEN 0; gpio -g write $LEDYELLOW 1
@@ -78,7 +78,7 @@ do
 		rm -f $EZMP3
 		;;
 
-	$KeyStopCast)
+	$KeyStartCast)
 		[ "$(pgrep ezstream)" ] && continue
 		rec -r 16k -t mp3 - | tee $EZMP3 | ezstream -c $EZXML &
 		gpio -g write $LEDGREEN 1; gpio -g write $LEDYELLOW 0
