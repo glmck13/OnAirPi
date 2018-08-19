@@ -1,5 +1,7 @@
 #!/bin/ksh
 
+PATH=$PATH:/sbin
+
 WIFI_CONF=/var/www/html/wifi.conf
 WIFI_INFO=/var/www/html/wifi.info
 
@@ -44,6 +46,7 @@ configWifi() {
 }
 
 showWifi() {
+	wpa_cli -i wlan0 scan
 	Network=$(iwconfig 2>&1 | grep SSID | cut -f2 -d:); print ${Network//\"/} >$WIFI_INFO
 	print $(wpa_cli list_networks | sed -e "/^[0-9]/!d" | cut -f2) >>$WIFI_INFO
 	print $(wpa_cli scan_results | sed -e "/:/!d" | cut -f5) >>$WIFI_INFO
