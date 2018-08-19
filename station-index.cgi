@@ -9,7 +9,6 @@ SETTINGS="ezstream.conf"
 [ "$REQUEST_METHOD" = "POST" ] && read -r QUERY_STRING
 
 vars="$QUERY_STRING"
-[ "$HTTP_COOKIE" ] && vars="${vars}&${HTTP_COOKIE}"
 while [ "$vars" ]
 do
 	print $vars | IFS='&' read v vars
