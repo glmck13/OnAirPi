@@ -1,7 +1,5 @@
 #!/bin/ksh
 
-set -x
-
 PATH=$PWD:$PATH
 WIFI_CONF=wifi.conf
 WIFI_INFO=wifi.info
@@ -23,13 +21,15 @@ if [ "$Command" ]; then
 	EOF
 fi
 
-set -A Infofile Active Configured Available
-n=0; while read ${Infofile[$n]}
-do
-	let n=$n+1
-done <$WIFI_INFO
+if [ -f "$WIFI_INFO" ]; then
+	set -A Infofile Active Configured Available
+	n=0; while read ${Infofile[$n]}
+	do
+		let n=$n+1
+	done <$WIFI_INFO
+fi
 
-cat - <<EOF
+cat - <<-EOF
 Content-type: text/html
 
 <html>

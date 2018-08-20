@@ -92,11 +92,11 @@ ssh -i $PEM $MCKLOGIN "rm -f $CDNM3U; echo $ICECASTURL >$CDNM3U"
 
 gpio -g write $LEDRED 0
 
-. $EZCONF
-
-EZINFONAME=${EZInfoName_SAVE:-Name}
-EZINFOGENRE=${EZInfoGenre_SAVE:-Genre}
-EZINFODESC=${EZInfoDesc_SAVE:-Description}
+set -A Conffile EZInfoName EZInfoGenre EZInfoDesc
+n=0; while read ${Conffile[$n]}
+do
+	let n=$n+1
+done <$EZCONF
 
 cat - >$EZXML <<-EOF
 <ezstream>
@@ -105,9 +105,9 @@ cat - >$EZXML <<-EOF
 	<format>MP3</format>
 	<filename>stdin</filename>
 	<stream_once>1</stream_once>
-	<svrinfoname>$EZINFONAME</svrinfoname>
-	<svrinfogenre>$EZINFOGENRE</svrinfogenre>
-	<svrinfodescription>$EZINFODESC</svrinfodescription>
+	<svrinfoname>$EZInfoName</svrinfoname>
+	<svrinfogenre>$EZInfoGenre</svrinfogenre>
+	<svrinfodescription>$EZInfoDesc</svrinfodescription>
 	<svrinfopublic>1</svrinfopublic>
 </ezstream>
 EOF
