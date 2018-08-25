@@ -52,11 +52,49 @@ showWifi() {
 	print $(wpa_cli scan_results | sed -e "/:/!d" | cut -f5) >>$WIFI_INFO
 }
 
-trap : HUP INT QUIT
+getEZConf () {
+	unset EZTimeout
+
+	scp -i $PEM $MCKLOGIN:$STATIONCONF $EZCONF || return
+
+	set -A Conffile EZInfoName EZInfoGenre EZInfoDesc EZTimeout EZClip1 EZClip2 EZClip3 KeyStartCast KeyStopCast KeyLoadWifi KeyShutdown
+	n=0; while read ${Conffile[$n]}
+	do
+		let n=$n+1
+	done <$EZCONF
+
+	cat - >$EZXML <<-EOF
+	<ezstream>
+		<url>$ICECASTURL</url>
+		<sourcepassword>KurtVonnegutIce9!</sourcepassword>
+		<format>MP3</format>
+		<filename>stdin</filename>
+		<stream_once>1</stream_once>
+		<svrinfoname>$EZInfoName</svrinfoname>
+		<svrinfogenre>$EZInfoGenre</svrinfogenre>
+		<svrinfodescription>$EZInfoDesc</svrinfodescription>
+		<svrinfopublic>1</svrinfopublic>
+	</ezstream>
+	EOF
+}
 
 exec >/dev/null 2>&1
 
-KeyStopCast=power KeyShutdown=media KeyStartCast=mute KeyLoadWifi=home
+trap : HUP INT QUIT
+
+STATION=$(hostname)
+PEM=~/etc/mckserver.pem
+EZXML="/tmp/ez$$.xml"
+EZCONF="/tmp/ez$$.conf"
+EZMP3="/tmp/$STATION.mp3"
+
+ICECASTURL="http://mckradio.dyndns.org:8000/$STATION.mp3"
+MCKSRVRMP3="https://mckserver.dyndns.org/cdn/$STATION.mp3"
+MCKLOGIN="ubuntu@mckserver.dyndns.org"
+HTMLROOT="/var/www/html"
+TMPMP3="/tmp/$STATION-lastClip.mp3"
+STATIONCONF="$HTMLROOT/$STATION/ezstream.conf"
+STATIONMKCAST="$HTMLROOT/cgi/mkechocast.sh"
 
 LEDGREEN=4 LEDYELLOW=2 LEDRED=3
 
@@ -68,53 +106,16 @@ done
 
 gpio -g write $LEDRED 1
 
-PEM=~/etc/mckserver.pem
-EZXML="/tmp/ez$$.xml"
-EZCONF="/tmp/ez$$.conf"
-EZMP3="/tmp/$(hostname).mp3"
-
-ICECASTURL="http://mckradio.dyndns.org:8000/$(hostname).mp3"
-MCKSRVRMP3="https://mckserver.dyndns.org/cdn/$(hostname).mp3"
-MCKLOGIN="ubuntu@mckserver.dyndns.org"
-HTMLROOT="/var/www/html"
-CDNMP3="$HTMLROOT/cdn/$(hostname).mp3"
-CDNM3U="$HTMLROOT/cdn/$(hostname).m3u"
-CLIENTCONF="$HTMLROOT/$(hostname)/ezstream.conf"
-
 while true
 do
-configWifi; showWifi
-scp -i $PEM $MCKLOGIN:$CLIENTCONF $EZCONF && break
+configWifi; showWifi; getEZConf
+[ "$EZTimeout" ] && break
 sleep 5
 done
 
-ssh -i $PEM $MCKLOGIN "rm -f $CDNM3U; echo $ICECASTURL >$CDNM3U"
-
-gpio -g write $LEDRED 0
-
-set -A Conffile EZInfoName EZInfoGenre EZInfoDesc
-n=0; while read ${Conffile[$n]}
-do
-	let n=$n+1
-done <$EZCONF
-
-cat - >$EZXML <<-EOF
-<ezstream>
-	<url>$ICECASTURL</url>
-	<sourcepassword>KurtVonnegutIce9!</sourcepassword>
-	<format>MP3</format>
-	<filename>stdin</filename>
-	<stream_once>1</stream_once>
-	<svrinfoname>$EZInfoName</svrinfoname>
-	<svrinfogenre>$EZInfoGenre</svrinfogenre>
-	<svrinfodescription>$EZInfoDesc</svrinfodescription>
-	<svrinfopublic>1</svrinfopublic>
-</ezstream>
-EOF
+gpio -g write $LEDRED 0; gpio -g write $LEDGREEN 0; gpio -g write $LEDYELLOW 1
 
 typeset -l Key
-
-gpio -g write $LEDGREEN 0; gpio -g write $LEDYELLOW 1
 
 irw | while read x Num Key Remote
 do
@@ -126,14 +127,19 @@ do
 		[ "$(pgrep ezstream)" ] || continue
 		pkill ezstream; wait %1
 		gpio -g write $LEDGREEN 0; gpio -g write $LEDYELLOW 1
-		ssh -i $PEM $MCKLOGIN "rm -f $CDNMP3"
-		scp -i $PEM $EZMP3 $MCKLOGIN:$CDNMP3
+		scp -i $PEM $EZMP3 $MCKLOGIN:$TMPMP3
+		ssh -i $PEM $MCKLOGIN "$STATIONMKCAST $TMPMP3 $EZClip1 $EZClip2 $EZClip3"
 		rm -f $EZMP3
 		;;
 
 	$KeyStartCast)
 		[ "$(pgrep ezstream)" ] && continue
-		rec -r 16k -t mp3 - | tee $EZMP3 | ezstream -c $EZXML &
+		getEZConf
+		if [ ! "$EZTimeout" ]; then
+			gpio -g write $LEDRED 1
+			continue
+		fi
+		timeout $EZTimeout rec -r 16k -t mp3 - | tee $EZMP3 | ezstream -c $EZXML &
 		gpio -g write $LEDGREEN 1; gpio -g write $LEDYELLOW 0
 		;;
 
