@@ -10,7 +10,7 @@ Audio="" Response=""
 while true
 do
 	Header=$(curl -s --user-agent "AlexaMediaPlayer/" $MCKSRVRM3U)
-	Header=$(curl -si "$Header" | head -1)
+	Header=$(curl -si --user-agent "AlexaMediaPlayer/" "$Header" | head -1)
 
 	if [[ $Header == *200\ OK* ]]; then
 		Audio=$MCKSRVRM3U
