@@ -65,7 +65,7 @@ def radio_handler(event, context):
             },
             "card": {
                 "type": "Simple",
-                "title": "EchoCast",
+                "title": "OnAirPi",
                 "content": speech
             },
             "shouldEndSession": shouldEndSession
