@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "echo cast",
+            "invocationName": "on air pi",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -31,7 +31,7 @@
                     "name": "StreamAudio",
                     "slots": [],
                     "samples": [
-                        "open echo cast"
+                        "open on air pi"
                     ]
                 }
             ],
