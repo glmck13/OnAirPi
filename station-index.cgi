@@ -60,7 +60,7 @@ case "$Command" in
 		rm -f ../$CLIPB
 		;;
 
-	DeleteEchoCast)
+	DeleteEcho)
 		rm -f ../$ECHOCAST
 		;;
 
@@ -168,12 +168,12 @@ $(
 </p>
 
 <p>
-EchoCast:
+EchoClip:
 $(
 	[ -f ../$ECHOCAST ] && print "<p>$(ls -l ../$ECHOCAST)<br><audio controls><source src=$ECHOCAST></audio>"
 )
 <br>
-<input type="submit" name="Command" value="DeleteEchoCast" />
+<input type="submit" name="Command" value="DeleteEcho" />
 <input type="submit" name="Command" value="CopyEchoToA" />
 <input type="submit" name="Command" value="CopyEchoToB" />
 </p>
