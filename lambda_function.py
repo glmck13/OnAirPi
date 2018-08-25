@@ -65,7 +65,7 @@ def radio_handler(event, context):
             },
             "card": {
                 "type": "Simple",
-                "title": "Radio Cast",
+                "title": "EchoCast",
                 "content": speech
             },
             "shouldEndSession": shouldEndSession
