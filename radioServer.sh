@@ -1,8 +1,6 @@
 #!/bin/ksh
 
 STATION=${1:?Enter station name}
-ICECASTURL="http://mckradio.dyndns.org:8000"
-ICECASTMP3=$ICECASTURL/$STATION.mp3
 MCKSRVR="https://mckserver.dyndns.org"
 MCKSRVRMP3="$MCKSRVR/cdn/$STATION/echocast.mp3"
 MCKSRVRM3U="$MCKSRVR/cdn/$STATION/icecast.m3u"
@@ -11,7 +9,8 @@ Audio="" Response=""
 
 while true
 do
-	Header=$(curl -si $ICECASTMP3 | head -1)
+	Header=$(curl -s --user-agent "AlexaMediaPlayer/" $MCKSRVRM3U)
+	Header=$(curl -si "$Header" | head -1)
 
 	if [[ $Header == *200\ OK* ]]; then
 		Audio=$MCKSRVRM3U
