@@ -4,8 +4,8 @@ STATION=${1:?Enter station name}
 ICECASTURL="http://mckradio.dyndns.org:8000"
 ICECASTMP3=$ICECASTURL/$STATION.mp3
 MCKSRVR="https://mckserver.dyndns.org"
-MCKSRVRMP3="$MCKSRVR/cdn/$STATION.mp3"
-MCKSRVRM3U="$MCKSRVR/cdn/$STATION.m3u"
+MCKSRVRMP3="$MCKSRVR/cdn/$STATION/echocast.mp3"
+MCKSRVRM3U="$MCKSRVR/cdn/$STATION/icecast.m3u"
 
 Audio="" Response=""
 
