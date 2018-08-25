@@ -73,7 +73,7 @@ getEZConf () {
 		<svrinfoname>$EZInfoName</svrinfoname>
 		<svrinfogenre>$EZInfoGenre</svrinfogenre>
 		<svrinfodescription>$EZInfoDesc</svrinfodescription>
-		<svrinfopublic>1</svrinfopublic>
+		<svrinfopublic>0</svrinfopublic>
 	</ezstream>
 	EOF
 }
