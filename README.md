@@ -27,6 +27,7 @@ Next mkdir ~pi/bin, and drop radioClient.sh under that directory.  In order to s
 ```
 @reboot /home/pi/bin/radioClient.sh
 ```
+Lastly, copy client-index.cgi to /var/www/html/index.cgi.  The page provides a primitive interface for adding/deleting WiFi networks on the Pi when it's running headless.  So how is this page accessed if the Pi is headless and it's not connected to any network?  In my case, I enable the hotspot on my iPhone, and tether the iPhone directly to the Pi using one of the Pi's USB ports.  In this configuration, the Pi is assigned address 172.20.10.4, and you can navigate directly to that address using Safari.
 
 ## Icasecast Server
 ## Alexa App
