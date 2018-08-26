@@ -136,7 +136,7 @@ do
 		[ "$(pgrep ezstream)" ] && continue
 		getEZConf
 		if [ ! "$EZTimeout" ]; then
-			gpio -g write $LEDRED 1; gpio -g write $LEDYELLOW 0
+			gpio -g write $LEDRED 1
 			continue
 		fi
 		timeout $EZTimeout rec -r 16k -t mp3 - | tee $EZMP3 | ezstream -c $EZXML &
@@ -144,6 +144,7 @@ do
 		;;
 
 	$KeyShutdown)
+		gpio -g write $LEDRED 1
 		sudo shutdown now
 		;;
 
