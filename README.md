@@ -12,7 +12,15 @@ Description | Amazon DP# | Price
 | USB Conference Microphone | [B076ZVZWC4](https://www.amazon.com/dp/B076ZVZWC4) | $59.99
 
 ## Pi Microphone
-- sox w/mp3, lirc, ezstream, wifi config page
+First, assemble the various components you purchased.  Mount your Pi on the battery stand, install the GPIO expansion board, insert the IR board on the middle set of pins, and the traffic light on BCM_GPIO pins 2..6 (alternatively labeled as SDA1, SCL1, P04, & GND on the header).  Insert the USB microphone into one of the Pi's USB slots.
+
+Next, install & configure software on the Pi. I'm running Raspbian stretch, with the following set of packages:  
+ - apache2 & gridsite-clients (to host a Wifi config page)
+ - lirc version 0.9.4c-9 (to process IR controls)
+ - sox & libsox-fmt-mp3 (to capture/record audio)
+ - ezstream (to stream audio to IceCast server)  
+
+Follow the instructions provided under my "MyVitals" wiki to configure the Apache web server.  As regards configuring lirc, follow the instructions for the Raspian *stretch* release provided here: http://shallowsky.com/blog/hardware/raspberry-pi-ir-remote-stretch.html
 ## Icasecast Server
 ## Alexa App
 ## Station Web App
