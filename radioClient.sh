@@ -136,7 +136,7 @@ do
 		[ "$(pgrep ezstream)" ] && continue
 		getEZConf
 		if [ ! "$EZTimeout" ]; then
-			gpio -g write $LEDRED 1
+			gpio -g write $LEDRED 1; gpio -g write $LEDYELLOW 0
 			continue
 		fi
 		timeout $EZTimeout rec -r 16k -t mp3 - | tee $EZMP3 | ezstream -c $EZXML &
@@ -148,6 +148,9 @@ do
 		;;
 
 	$KeyLoadWifi)
+		led=$(gpio -g read $LEDRED)
+		timeout 2s gpio -g blink $LEDRED
+		gpio -g write $LEDRED $led
 		configWifi; showWifi
 		;;
 
