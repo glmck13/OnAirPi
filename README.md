@@ -1,7 +1,6 @@
 # OnAirPi
 Project to create a streaming Internet Radio service using a portable Pi microphone, an AWS-hosted IceCast server, and an Alexa Skills App  
 <img src=https://github.com/glmck13/OnAirPi/blob/master/docs/OnAirPi90.jpg height=250>
-<img src=https://github.com/glmck13/OnAirPi/blob/master/docs/wifisetup.png width=250>
 <img src=https://github.com/glmck13/OnAirPi/blob/master/docs/AlexaSkill.png width=250>  
 
 ## Parts List
