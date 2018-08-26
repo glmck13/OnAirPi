@@ -11,7 +11,7 @@ Description | Amazon DP# | Price
 | USB Conference Microphone | [B076ZVZWC4](https://www.amazon.com/dp/B076ZVZWC4) | $59.99
 
 ## Pi Microphone
-- sox w/mp3, lirc, ezstream
+- sox w/mp3, lirc, ezstream, wifi config page
 ## Icasecast Server
 ## Alexa App
-## Station Utility
+## Station Web App
