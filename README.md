@@ -20,7 +20,13 @@ Next, install & configure software on the Pi. I'm running Raspbian stretch, with
  - sox & libsox-fmt-mp3 (to capture/record audio)
  - ezstream (to stream audio to IceCast server)  
 
-Follow the instructions provided under my "MyVitals" wiki to configure the Apache web server.  As regards configuring lirc, follow the instructions for the Raspian *stretch* release provided here: http://shallowsky.com/blog/hardware/raspberry-pi-ir-remote-stretch.html
+Follow the instructions provided under my "MyVitals" wiki to configure the Apache web server.  As regards configuring lirc, follow the instructions for the Raspian *stretch* release provided here: http://shallowsky.com/blog/hardware/raspberry-pi-ir-remote-stretch.html.  The osoyoo.conf file in the repository contains codes for the remote control supplied with IR header.  Drop this file into /etc/lirc/lircd.conf.d.  
+
+Next mkdir ~pi/bin, and drop radioClient.sh under that directory.  In order to start the utility on reboot, add the following line to the pi user's crontab:
+```
+@reboot /home/pi/bin/radioClient.sh
+```
+
 ## Icasecast Server
 ## Alexa App
 ## Station Web App
