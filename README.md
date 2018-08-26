@@ -27,7 +27,10 @@ Next mkdir ~pi/bin, and drop radioClient.sh under that directory.  In order to s
 ```
 @reboot /home/pi/bin/radioClient.sh
 ```
-Lastly, copy client-index.cgi to /var/www/html/index.cgi.  The page provides a primitive interface for adding/deleting WiFi networks on the Pi when it's running headless.  So how is this page accessed if the Pi is headless and it's not connected to any network?  In my case, I enable the hotspot on my iPhone, and tether the iPhone directly to the Pi using one of the Pi's USB ports.  In this configuration, the Pi is assigned address 172.20.10.4, and you can navigate directly to that address using Safari.  If for some reason the Pi fails to connect to the iPhone, follow the "iPhone tethering" instructions listed under https://github.com/glmck13/MobilePi/blob/master/client-config/README.md (you van omit the hotplug entry in /etc/network/interfaces, since we won't be turning up an IPsec tunnel)
+Lastly, copy client-index.cgi to /var/www/html/index.cgi.  The page provides a primitive interface for adding/deleting WiFi networks on the Pi when it's running headless:  
+<img src=https://github.com/glmck13/OnAirPi/blob/master/docs/wifisetup.png width=250>  
+
+So how is this page accessed if the Pi is headless and it's not connected to any network?  In my case, I enable the hotspot on my iPhone, and tether the iPhone directly to the Pi using one of the Pi's USB ports.  In this configuration, the Pi is assigned address 172.20.10.4, and you can navigate directly to that address using Safari.  If for some reason the Pi fails to connect to the iPhone, follow the "iPhone tethering" instructions listed under https://github.com/glmck13/MobilePi/blob/master/client-config/README.md (you van omit the hotplug entry in /etc/network/interfaces, since we won't be turning up an IPsec tunnel)
 
 ## Icasecast Server
 ## Alexa App
