@@ -37,7 +37,7 @@ usermod -a -G netdev pi
 ```
 
 ## Icasecast Server
-My Icecast server runs on an Ubuntu LightSail instance within AWS.  To get it running I downloaded the icecast2 paackage, then edited /etc/icecast2/icecast.xml to modify <source-password> (used by EZstream), <admin-password>, and <hostname>.
+My Icecast server runs on an Ubuntu LightSail instance within AWS.  To get it running I downloaded the icecast2 paackage, then edited /etc/icecast2/icecast.xml to modify <source-password> (used by EZstream), <admin-password>, and <hostname>.  I then opened up port 8000 on the AWS firewall.  
 
 ## Alexa App
 ## Station Web App
