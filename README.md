@@ -22,7 +22,7 @@ Next, install & configure software on the Pi. I'm running Raspbian stretch, with
  - sox & libsox-fmt-mp3 (to capture/record audio)
  - ezstream (to stream audio to IceCast server)  
 
-Follow the [instructions provided under my "MyVitals" wiki](https://github.com/glmck13/MyVitals/wiki/1-Install) to configure the Apache web server.  As regards configuring lirc, follow the [instructions for the Raspian *stretch* release provided here](http://shallowsky.com/blog/hardware/raspberry-pi-ir-remote-stretch.html).  The osoyoo.conf file in the repository contains codes for the remote control supplied with IR header.  Drop this file into /etc/lirc/lircd.conf.d.  The repository also contains codes for a "nooelec" remote, which is the one I'm currently using, and is depicted in the figure above.  
+Follow the [instructions provided under my "MyVitals" wiki](https://github.com/glmck13/MyVitals/wiki/1-Install) to configure the Apache web server.  As regards configuring lirc, follow the [instructions for the Raspian *stretch* release provided here](http://shallowsky.com/blog/hardware/raspberry-pi-ir-remote-stretch.html).  The osoyoo.conf file in the repository contains codes for the remote control supplied with IR header.  Drop this file into /etc/lirc/lircd.conf.d.  The repository also contains codes for a nooelec remote, which is the one I'm currently using, and is depicted in the figure above.  In addition, right click the volume control icon in the top right corner of the Pi desktop, and select the USB mic as the deafult.
 
 Next mkdir ~pi/bin, and drop radioClient.sh under that directory.  In order to start the utility on reboot, add the following line to the pi user's crontab:
 ```
@@ -37,5 +37,7 @@ usermod -a -G netdev pi
 ```
 
 ## Icasecast Server
+My Icecast server runs on an Ubuntu LightSail instance within AWS.  To get it running I downloaded the icecast2 paackage, then edited /etc/icecast2/icecast.xml to modify <source-password> (used by EZstream), <admin-password>, and <hostname>.
+
 ## Alexa App
 ## Station Web App
