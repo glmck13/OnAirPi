@@ -11,8 +11,21 @@ do
 	[ "$v" ] && export $v
 done
 
+mount=$(urlencode -d "$mount")
+station=${mount} station=${station#/} station=${station%%.*}
+
+vars="${mount#*\?}"
+while [ "$vars" ]
+do
+	print $vars | IFS='&' read v vars
+	[ "$v" ] && export $v
+done
+
+auth=0
+htpasswd -bv ../$station/.htpasswd "$user" "$pass" 2>/dev/null && auth=1
+
 cat - <<EOF
-icecast-auth-user: 1
+icecast-auth-user: $auth
 Content-type: text/html
 
 <html></html>
