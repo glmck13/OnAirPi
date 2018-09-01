@@ -65,7 +65,7 @@ def radio_handler(event, context):
             },
             "card": {
                 "type": "Simple",
-                "title": "OnAirPi",
+                "title": os.environ.get('ALEXA_CARDTITLE') ,
                 "content": speech
             },
             "shouldEndSession": shouldEndSession
