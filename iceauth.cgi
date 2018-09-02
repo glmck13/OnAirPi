@@ -14,7 +14,7 @@ done
 mount=$(urlencode -d "$mount")
 station=${mount} station=${station#/} station=${station%%.*}
 
-vars="${mount#*\?}"
+vars=$(print "$mount" | sed -e "s/^[^?]\+//" -e "s/?//")
 while [ "$vars" ]
 do
 	print $vars | IFS='&' read v vars
